@@ -38,7 +38,8 @@ function transacReducer(transactions = [], action){
         }
       ]
     case GET_TRANSACTIONS:
-      return transactions
+      let transactions_ = transactions.filter((transaction)=> transaction.compte.id == action.id)
+      return transactions_
     default:
       return transactions
   }
