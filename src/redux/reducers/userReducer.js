@@ -8,7 +8,7 @@ function userReducer(users = [], action){
       return [
         ...users,
         {
-          id: users.length()+1,
+          id: users.length+1,
           nom: action.nom,
           prenom: action.prenom,
           age: action.age,

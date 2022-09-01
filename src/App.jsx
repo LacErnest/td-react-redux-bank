@@ -5,12 +5,14 @@ import UserPage from './pages/UserPage'
 import AccountPage from './pages/AccountPage'
 import TransacPage from './pages/TransacPage'
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import Menu from './components/Menu'
 
 function App() {
   
 
   return (
     <Router>
+      <Menu />
       <div className="App">
           <Routes>
             <Route path="/" exact element={<UserPage />} />

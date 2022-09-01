@@ -9,7 +9,7 @@ function transacReducer(transactions = [], action){
       return [
         ...transactions,
         {
-          id: transactions.length() + 1,
+          id: transactions.length + 1,
           compte: action.compte,
           amount: action.amount,
           date: action.date,
@@ -23,14 +23,14 @@ function transacReducer(transactions = [], action){
       return [
         ...transactions,
         {
-          id: transactions.length()+1,
+          id: transactions.length+1,
           compte: compte_cred,
           amount: action.amount,
           date: Date.now(),
           cash_flow: "IN"
         },
         {
-          id: transactions.length() + 2,
+          id: transactions.length + 2,
           compte: compte_deb,
           amount: action.amount,
           date: Date.now(),

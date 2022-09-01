@@ -10,13 +10,26 @@ class AccountForm extends Component {
     super(props)
 
     this.state = {
-      user: null,
+      user: {},
       balance: 0
     }
   }
 
+  componentDidMount(){
+    console.log("users", this.props.users)
+  }
+
   handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
+    console.log("target name", e.target.name)
+    console.log("target value", e.target.value)
+    if (e.target.name== 'user'){
+      let {id, nom, prenom, age, sex} = JSON.parse(e.target.value)
+      this.setState({ user: { id, nom, prenom, age, sex } })
+    }else{
+      this.setState({ [e.target.name]: e.target.value })
+    }
+    
+    console.log("state", this.state)
   }
 
   handleSubmit = (e) => {
@@ -24,13 +37,18 @@ class AccountForm extends Component {
 
     let { user, balance } = this.state
     
-    this.props.addAccount(user, balance)
+    let {id, nom, prenom, age, sex} = user
+
+    console.log({ id, nom, prenom, age, sex })
+    console.log(user)
+    this.props.addAccount({ id, nom, prenom, age, sex }, balance)
   }
 
 
   render() {
+    console.log("users", this.props.users)
     const userList = this.props.users.map((user) => (
-      <option value={user} key={user.id}>{user.prenom} {user.nom}</option>
+      <option value={JSON.stringify(user)} key={user.id}>{user.prenom} {user.nom}</option>
     ))
     return (
       <div className="container">
@@ -41,7 +59,6 @@ class AccountForm extends Component {
           <select
             id="user"
             name="user"
-            value={this.state.user}
             onChange={this.handleChange}
           >
             {userList}
@@ -61,4 +78,8 @@ class AccountForm extends Component {
   }
 }
 
-export default connect(null, { addAccount: addAccount })(AccountForm)
+const mapStateToprops = (state) => ({
+  users: state.users
+})
+
+export default connect(mapStateToprops, { addAccount: addAccount })(AccountForm)

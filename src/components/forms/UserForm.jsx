@@ -27,6 +27,7 @@ class UserForm extends Component{
     let {nom, prenom, age, sex} = this.state
 
     this.props.addUser(nom, prenom, age, sex)
+    console.log(this.state)
   }
 
 

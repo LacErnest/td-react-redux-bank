@@ -8,7 +8,7 @@ function accountReducer(accounts = [], action){
       return [
         ...accounts,
         {
-          id: accounts.length() + 1,
+          id: accounts.length + 1,
           user: action.user,
           balance: action.balance
         }

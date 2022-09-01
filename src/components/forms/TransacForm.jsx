@@ -10,8 +10,8 @@ class TransacForm extends Component {
     super(props)
 
     this.state = {
-      compte_cred: this.props.accounts[0],
-      compte_deb: this.props.accounts[0],
+      compte_cred: {},
+      compte_deb: {},
       amount: 0,
       cash_flow: 'IN',
       type: 'Depot'
@@ -19,29 +19,46 @@ class TransacForm extends Component {
   }
 
   handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
+    if(e.target.name == 'compte_cred'){
+      console.log("target name", e.target.name)
+      console.log("target value", e.target.value)
+      this.setState({ compte_cred: JSON.parse(e.target.value)})
+      console.log(this.state)
+    } else if (e.target.name == 'compte_deb'){
+      console.log("target name", e.target.name)
+      console.log("target value", e.target.value)
+      this.setState({ compte_deb: JSON.parse(e.target.value) })
+      console.log(this.state)
+   }else{
+      this.setState({ [e.target.name]: e.target.value })
+      console.log(this.state)
+   }
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     let { compte_cred, compte_deb, amount, cash_flow, type} = this.state
+    let {id_cred, user_cred, balance_cred} = compte_cred
+    let { id_deb, user_deb, balance_deb } = compte_deb
     console.log(this.state)
-    if(type == 'Virement'){
-        if(compte_cred.id != compte_deb.id){
-          this.props.addTransactionVirement(compte_deb, compte_cred, amount, Date.now())
-          this.props.addTransaction(compte_cred, amount, 'IN')
-          this.props.addTransaction(compte_deb, amount, 'OUT')
+    if(this.state.type == 'Virement'){
+        console.log(id_cred != id_deb)
+        if(id_cred != id_deb){
+          this.props.addTransactionVirement({ id_deb, user_deb, balance_deb }, { id_cred, user_cred, balance_cred }, amount, Date.now())
+          this.props.addTransaction({ id_cred, user_cred, balance_cred }, amount, 'IN')
+          this.props.addTransaction({ id_deb, user_deb, balance_deb }, amount, 'OUT')
         }
     }else{
-      this.props.addTransaction(compte_cred, amount, cash_flow)
+      this.props.addTransaction({ id_cred, user_cred, balance_cred }, amount, cash_flow)
     }
   }
 
 
   render() {
+    console.log(this.props.accounts)
     const compteList = this.props.accounts.map((account) => (
-      <option value={account} key={account.id}>Compte de {account.user.nom}</option>
+      <option value={JSON.stringify(account)} key={account.id}>Compte de {account.user.nom}</option>
     ))
     return (
       <div className="container">
@@ -52,7 +69,7 @@ class TransacForm extends Component {
           <select
             id="compte_deb"
             name="compte_deb"
-            value={this.state.compte_deb}
+            value={this.state.value}
             onChange={this.handleChange}
           >
             {compteList}
@@ -61,7 +78,7 @@ class TransacForm extends Component {
           <select
             id="compte_cred"
             name="compte_cred"
-            value={this.state.compte_cred}
+            value={this.state.value}
             onChange={this.handleChange}
           >
             {compteList}
@@ -102,4 +119,8 @@ class TransacForm extends Component {
   }
 }
 
-export default connect(null, { addTransaction: addTransaction, addTransactionVirement: addTransactionVirement})(TransacForm)
+const mapStateToprops = (state) => ({
+  accounts: state.accounts
+})
+
+export default connect(mapStateToprops, { addTransaction: addTransaction, addTransactionVirement: addTransactionVirement})(TransacForm)

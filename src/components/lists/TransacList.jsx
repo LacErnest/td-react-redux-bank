@@ -7,7 +7,7 @@ class Transaclist extends Component{
     super(props)
 
     this.state = {
-      compte : this.props.accounts[0],
+      compte : [],
       transactions: []
     }
   }
@@ -19,22 +19,30 @@ class Transaclist extends Component{
   handleSubmit = (e) => {
     e.preventDefault()
 
-    compte = this.state.compte
-    this.setState({transactions: this.props.getTransaction(compte.id)})
+    let compte = this.state.compte
+    let compte_obj = JSON.parse(compte)
+    console.log("compte recherché", compte_obj)
+    console.log("les transactions", this.props.getTransaction(compte_obj.id))
+    this.props.getTransaction(compte_obj.id)
+    this.setState({transactions: this.props.transactions})
+    console.log("les transactions du compte", this.state.transactions)
   }
 
   render(){
+    console.log(this.props.accounts)
     const compteList = this.props.accounts.map((account) => (
-      <option value={account} key={account.id}>Compte de {account.user.nom}</option>
+      <option value={JSON.stringify(account)} key={account.id}>Compte de {account.user.nom}</option>
+    ))
+    const transacList = this.props.transactions.map((transac) => (
+      <li value={JSON.stringify(transac)} key={transac.id}>Transaction du {transac.date}</li>
     ))
     return(
       <div className='container'>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <label htmlFor='compte'>Aficher la liste des transactions du compte</label>
           <select
             id='compte'
             name='compte'
-            value={this.state.compte}
             onChange={this.handleChange}
           >
             {compteList}
@@ -45,11 +53,16 @@ class Transaclist extends Component{
         <hr />
 
         <ul>
-          {this.state.transactions}
+          {transacList}
         </ul>
       </div>
     )
   }
 }
 
-export default connect(null, {getTransaction: getTransaction})(Transaclist)
+const mapStateToprops = (state) =>({
+  accounts: state.accounts,
+  transactions: state.transactions
+})
+
+export default connect(mapStateToprops, {getTransaction: getTransaction})(Transaclist)
