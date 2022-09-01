@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import TransacForm from '../components/forms/TransacForm'
-import TransacList from '../components/forms/TransacList'
+import TransacList from '../components/lists/TransacList'
 
 class TransacPage extends Component {
 

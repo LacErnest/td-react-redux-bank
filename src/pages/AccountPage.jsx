@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AccountFom from '../components/forms/AccountFom'
+import AccountForm from '../components/forms/AccountForm'
 
 class AccountPage extends Component {
 
@@ -7,7 +7,7 @@ class AccountPage extends Component {
   render() {
     return (
       <div>
-        <AccountFom />
+        <AccountForm />
       </div>
     )
   }

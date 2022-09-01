@@ -61,4 +61,4 @@ class AccountForm extends Component {
   }
 }
 
-export default connect(null, { addUser: addUser })(AccountForm)
+export default connect(null, { addAccount: addAccount })(AccountForm)

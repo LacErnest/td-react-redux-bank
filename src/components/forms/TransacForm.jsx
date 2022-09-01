@@ -29,9 +29,9 @@ class TransacForm extends Component {
     console.log(this.state)
     if(type == 'Virement'){
         if(compte_cred.id != compte_deb.id){
-          this.addTransactionVirement(compte_deb, compte_cred, amount, Date.now())
-          this.addTransaction(compte_cred, amount, 'IN')
-          this.addTransaction(compte_deb, amount, 'OUT')
+          this.props.addTransactionVirement(compte_deb, compte_cred, amount, Date.now())
+          this.props.addTransaction(compte_cred, amount, 'IN')
+          this.props.addTransaction(compte_deb, amount, 'OUT')
         }
     }else{
       this.props.addTransaction(compte_cred, amount, cash_flow)
@@ -102,4 +102,4 @@ class TransacForm extends Component {
   }
 }
 
-export default connect(null, { addTransaction: addTransaction })(TransacForm)
+export default connect(null, { addTransaction: addTransaction, addTransactionVirement: addTransactionVirement})(TransacForm)

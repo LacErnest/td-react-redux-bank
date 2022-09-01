@@ -52,4 +52,4 @@ class Transaclist extends Component{
   }
 }
 
-connect(null, {getTransaction: getTransaction})(Transaclist)
+export default connect(null, {getTransaction: getTransaction})(Transaclist)
