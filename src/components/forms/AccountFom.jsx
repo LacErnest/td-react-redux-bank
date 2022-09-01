@@ -24,12 +24,12 @@ class AccountForm extends Component {
 
     let { user, balance } = this.state
     
-    this.props.addAccount(user_, balance)
+    this.props.addAccount(user, balance)
   }
 
 
   render() {
-    const userList = this.props.users.map((map) => (
+    const userList = this.props.users.map((user) => (
       <option value={user} key={user.id}>{user.prenom} {user.nom}</option>
     ))
     return (

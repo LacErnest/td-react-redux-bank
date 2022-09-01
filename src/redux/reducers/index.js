@@ -1,6 +1,6 @@
-import {accountReducer} from './accountReducer'
-import { transacReducer } from './transacReducer'
-import { userReducer } from './userReducer'
+import accountReducer from './accountReducer'
+import transacReducer  from './transacReducer'
+import userReducer  from './userReducer'
 import {  combineReducers } from 'redux'
 
 const rootReducer = combineReducers({
