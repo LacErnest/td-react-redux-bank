@@ -49,8 +49,3 @@ export default transacReducer
 
 
 
-
-
-const montab = [a, b]
-
-console.log(monTab)  //[...a, b]
